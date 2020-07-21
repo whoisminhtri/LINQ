@@ -1,0 +1,469 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PracticeSQLModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DMDIEMHP">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaSV" Type="varchar" MaxLength="50" />
+          <Property Name="MaHP" Type="varchar" MaxLength="50" />
+          <Property Name="DiemHP" Type="float" />
+        </EntityType>
+        <EntityType Name="DMHOCPHAN">
+          <Key>
+            <PropertyRef Name="MaHP" />
+          </Key>
+          <Property Name="MaHP" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TenHP" Type="nvarchar" MaxLength="50" />
+          <Property Name="Sodvht" Type="int" />
+          <Property Name="MaNganh" Type="varchar" MaxLength="50" />
+          <Property Name="HocKy" Type="int" />
+        </EntityType>
+        <EntityType Name="DMKHOA">
+          <Key>
+            <PropertyRef Name="MaKhoa" />
+          </Key>
+          <Property Name="MaKhoa" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TenKhoa" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="DMLOP">
+          <Key>
+            <PropertyRef Name="MaLop" />
+          </Key>
+          <Property Name="MaLop" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TenLop" Type="nvarchar" MaxLength="50" />
+          <Property Name="MaNganh" Type="varchar" MaxLength="50" />
+          <Property Name="KhoaHoc" Type="int" />
+          <Property Name="HeDT" Type="varchar" MaxLength="50" />
+          <Property Name="NamNhapHoc" Type="int" />
+        </EntityType>
+        <EntityType Name="DMNGANH">
+          <Key>
+            <PropertyRef Name="MaNganh" />
+          </Key>
+          <Property Name="MaNganh" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TenNganh" Type="nvarchar" MaxLength="50" />
+          <Property Name="MaKhoa" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="DMSINHVIEN">
+          <Key>
+            <PropertyRef Name="MaSV" />
+          </Key>
+          <Property Name="MaSV" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="HoTen" Type="nvarchar" MaxLength="50" />
+          <Property Name="MaLop" Type="varchar" MaxLength="50" />
+          <Property Name="GioiTinh" Type="bit" />
+          <Property Name="NgaySinh" Type="datetime" />
+          <Property Name="DiaChi" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_DMDIEMHP_DMHOCPHAN">
+          <End Role="DMHOCPHAN" Type="Self.DMHOCPHAN" Multiplicity="0..1" />
+          <End Role="DMDIEMHP" Type="Self.DMDIEMHP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DMHOCPHAN">
+              <PropertyRef Name="MaHP" />
+            </Principal>
+            <Dependent Role="DMDIEMHP">
+              <PropertyRef Name="MaHP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DMDIEMHP_DMSINHVIEN">
+          <End Role="DMSINHVIEN" Type="Self.DMSINHVIEN" Multiplicity="0..1" />
+          <End Role="DMDIEMHP" Type="Self.DMDIEMHP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DMSINHVIEN">
+              <PropertyRef Name="MaSV" />
+            </Principal>
+            <Dependent Role="DMDIEMHP">
+              <PropertyRef Name="MaSV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DMHOCPHAN_DMNGANH">
+          <End Role="DMNGANH" Type="Self.DMNGANH" Multiplicity="0..1" />
+          <End Role="DMHOCPHAN" Type="Self.DMHOCPHAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DMNGANH">
+              <PropertyRef Name="MaNganh" />
+            </Principal>
+            <Dependent Role="DMHOCPHAN">
+              <PropertyRef Name="MaNganh" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DMLOP_DMNGANH">
+          <End Role="DMNGANH" Type="Self.DMNGANH" Multiplicity="0..1" />
+          <End Role="DMLOP" Type="Self.DMLOP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DMNGANH">
+              <PropertyRef Name="MaNganh" />
+            </Principal>
+            <Dependent Role="DMLOP">
+              <PropertyRef Name="MaNganh" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DMNGANH_DMKHOA">
+          <End Role="DMKHOA" Type="Self.DMKHOA" Multiplicity="0..1" />
+          <End Role="DMNGANH" Type="Self.DMNGANH" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DMKHOA">
+              <PropertyRef Name="MaKhoa" />
+            </Principal>
+            <Dependent Role="DMNGANH">
+              <PropertyRef Name="MaKhoa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DMSINHVIEN_DMLOP">
+          <End Role="DMLOP" Type="Self.DMLOP" Multiplicity="0..1" />
+          <End Role="DMSINHVIEN" Type="Self.DMSINHVIEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DMLOP">
+              <PropertyRef Name="MaLop" />
+            </Principal>
+            <Dependent Role="DMSINHVIEN">
+              <PropertyRef Name="MaLop" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PracticeSQLModelStoreContainer">
+          <EntitySet Name="DMDIEMHP" EntityType="Self.DMDIEMHP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DMHOCPHAN" EntityType="Self.DMHOCPHAN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DMKHOA" EntityType="Self.DMKHOA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DMLOP" EntityType="Self.DMLOP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DMNGANH" EntityType="Self.DMNGANH" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DMSINHVIEN" EntityType="Self.DMSINHVIEN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DMDIEMHP_DMHOCPHAN" Association="Self.FK_DMDIEMHP_DMHOCPHAN">
+            <End Role="DMHOCPHAN" EntitySet="DMHOCPHAN" />
+            <End Role="DMDIEMHP" EntitySet="DMDIEMHP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DMDIEMHP_DMSINHVIEN" Association="Self.FK_DMDIEMHP_DMSINHVIEN">
+            <End Role="DMSINHVIEN" EntitySet="DMSINHVIEN" />
+            <End Role="DMDIEMHP" EntitySet="DMDIEMHP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DMHOCPHAN_DMNGANH" Association="Self.FK_DMHOCPHAN_DMNGANH">
+            <End Role="DMNGANH" EntitySet="DMNGANH" />
+            <End Role="DMHOCPHAN" EntitySet="DMHOCPHAN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DMLOP_DMNGANH" Association="Self.FK_DMLOP_DMNGANH">
+            <End Role="DMNGANH" EntitySet="DMNGANH" />
+            <End Role="DMLOP" EntitySet="DMLOP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DMNGANH_DMKHOA" Association="Self.FK_DMNGANH_DMKHOA">
+            <End Role="DMKHOA" EntitySet="DMKHOA" />
+            <End Role="DMNGANH" EntitySet="DMNGANH" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DMSINHVIEN_DMLOP" Association="Self.FK_DMSINHVIEN_DMLOP">
+            <End Role="DMLOP" EntitySet="DMLOP" />
+            <End Role="DMSINHVIEN" EntitySet="DMSINHVIEN" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PracticeSQLModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DMDIEMHP">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaSV" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MaHP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DiemHP" Type="Double" />
+          <NavigationProperty Name="DMHOCPHAN" Relationship="Self.FK_DMDIEMHP_DMHOCPHAN" FromRole="DMDIEMHP" ToRole="DMHOCPHAN" />
+          <NavigationProperty Name="DMSINHVIEN" Relationship="Self.FK_DMDIEMHP_DMSINHVIEN" FromRole="DMDIEMHP" ToRole="DMSINHVIEN" />
+        </EntityType>
+        <EntityType Name="DMHOCPHAN">
+          <Key>
+            <PropertyRef Name="MaHP" />
+          </Key>
+          <Property Name="MaHP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TenHP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Sodvht" Type="Int32" />
+          <Property Name="MaNganh" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HocKy" Type="Int32" />
+          <NavigationProperty Name="DMDIEMHPs" Relationship="Self.FK_DMDIEMHP_DMHOCPHAN" FromRole="DMHOCPHAN" ToRole="DMDIEMHP" />
+          <NavigationProperty Name="DMNGANH" Relationship="Self.FK_DMHOCPHAN_DMNGANH" FromRole="DMHOCPHAN" ToRole="DMNGANH" />
+        </EntityType>
+        <EntityType Name="DMKHOA">
+          <Key>
+            <PropertyRef Name="MaKhoa" />
+          </Key>
+          <Property Name="MaKhoa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TenKhoa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DMNGANHs" Relationship="Self.FK_DMNGANH_DMKHOA" FromRole="DMKHOA" ToRole="DMNGANH" />
+        </EntityType>
+        <EntityType Name="DMLOP">
+          <Key>
+            <PropertyRef Name="MaLop" />
+          </Key>
+          <Property Name="MaLop" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TenLop" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MaNganh" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="KhoaHoc" Type="Int32" />
+          <Property Name="HeDT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NamNhapHoc" Type="Int32" />
+          <NavigationProperty Name="DMNGANH" Relationship="Self.FK_DMLOP_DMNGANH" FromRole="DMLOP" ToRole="DMNGANH" />
+          <NavigationProperty Name="DMSINHVIENs" Relationship="Self.FK_DMSINHVIEN_DMLOP" FromRole="DMLOP" ToRole="DMSINHVIEN" />
+        </EntityType>
+        <EntityType Name="DMNGANH">
+          <Key>
+            <PropertyRef Name="MaNganh" />
+          </Key>
+          <Property Name="MaNganh" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TenNganh" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MaKhoa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DMHOCPHANs" Relationship="Self.FK_DMHOCPHAN_DMNGANH" FromRole="DMNGANH" ToRole="DMHOCPHAN" />
+          <NavigationProperty Name="DMKHOA" Relationship="Self.FK_DMNGANH_DMKHOA" FromRole="DMNGANH" ToRole="DMKHOA" />
+          <NavigationProperty Name="DMLOPs" Relationship="Self.FK_DMLOP_DMNGANH" FromRole="DMNGANH" ToRole="DMLOP" />
+        </EntityType>
+        <EntityType Name="DMSINHVIEN">
+          <Key>
+            <PropertyRef Name="MaSV" />
+          </Key>
+          <Property Name="MaSV" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HoTen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MaLop" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="GioiTinh" Type="Boolean" />
+          <Property Name="NgaySinh" Type="DateTime" Precision="3" />
+          <Property Name="DiaChi" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DMDIEMHPs" Relationship="Self.FK_DMDIEMHP_DMSINHVIEN" FromRole="DMSINHVIEN" ToRole="DMDIEMHP" />
+          <NavigationProperty Name="DMLOP" Relationship="Self.FK_DMSINHVIEN_DMLOP" FromRole="DMSINHVIEN" ToRole="DMLOP" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_DMDIEMHP_DMHOCPHAN">
+          <End Role="DMHOCPHAN" Type="Self.DMHOCPHAN" Multiplicity="0..1" />
+          <End Role="DMDIEMHP" Type="Self.DMDIEMHP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DMHOCPHAN">
+              <PropertyRef Name="MaHP" />
+            </Principal>
+            <Dependent Role="DMDIEMHP">
+              <PropertyRef Name="MaHP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DMDIEMHP_DMSINHVIEN">
+          <End Role="DMSINHVIEN" Type="Self.DMSINHVIEN" Multiplicity="0..1" />
+          <End Role="DMDIEMHP" Type="Self.DMDIEMHP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DMSINHVIEN">
+              <PropertyRef Name="MaSV" />
+            </Principal>
+            <Dependent Role="DMDIEMHP">
+              <PropertyRef Name="MaSV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DMHOCPHAN_DMNGANH">
+          <End Role="DMNGANH" Type="Self.DMNGANH" Multiplicity="0..1" />
+          <End Role="DMHOCPHAN" Type="Self.DMHOCPHAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DMNGANH">
+              <PropertyRef Name="MaNganh" />
+            </Principal>
+            <Dependent Role="DMHOCPHAN">
+              <PropertyRef Name="MaNganh" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DMNGANH_DMKHOA">
+          <End Role="DMKHOA" Type="Self.DMKHOA" Multiplicity="0..1" />
+          <End Role="DMNGANH" Type="Self.DMNGANH" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DMKHOA">
+              <PropertyRef Name="MaKhoa" />
+            </Principal>
+            <Dependent Role="DMNGANH">
+              <PropertyRef Name="MaKhoa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DMLOP_DMNGANH">
+          <End Role="DMNGANH" Type="Self.DMNGANH" Multiplicity="0..1" />
+          <End Role="DMLOP" Type="Self.DMLOP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DMNGANH">
+              <PropertyRef Name="MaNganh" />
+            </Principal>
+            <Dependent Role="DMLOP">
+              <PropertyRef Name="MaNganh" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DMSINHVIEN_DMLOP">
+          <End Role="DMLOP" Type="Self.DMLOP" Multiplicity="0..1" />
+          <End Role="DMSINHVIEN" Type="Self.DMSINHVIEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DMLOP">
+              <PropertyRef Name="MaLop" />
+            </Principal>
+            <Dependent Role="DMSINHVIEN">
+              <PropertyRef Name="MaLop" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PracticeSQLEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DMDIEMHPs" EntityType="Self.DMDIEMHP" />
+          <EntitySet Name="DMHOCPHANs" EntityType="Self.DMHOCPHAN" />
+          <EntitySet Name="DMKHOAs" EntityType="Self.DMKHOA" />
+          <EntitySet Name="DMLOPs" EntityType="Self.DMLOP" />
+          <EntitySet Name="DMNGANHs" EntityType="Self.DMNGANH" />
+          <EntitySet Name="DMSINHVIENs" EntityType="Self.DMSINHVIEN" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <AssociationSet Name="FK_DMDIEMHP_DMHOCPHAN" Association="Self.FK_DMDIEMHP_DMHOCPHAN">
+            <End Role="DMHOCPHAN" EntitySet="DMHOCPHANs" />
+            <End Role="DMDIEMHP" EntitySet="DMDIEMHPs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DMDIEMHP_DMSINHVIEN" Association="Self.FK_DMDIEMHP_DMSINHVIEN">
+            <End Role="DMSINHVIEN" EntitySet="DMSINHVIENs" />
+            <End Role="DMDIEMHP" EntitySet="DMDIEMHPs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DMHOCPHAN_DMNGANH" Association="Self.FK_DMHOCPHAN_DMNGANH">
+            <End Role="DMNGANH" EntitySet="DMNGANHs" />
+            <End Role="DMHOCPHAN" EntitySet="DMHOCPHANs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DMNGANH_DMKHOA" Association="Self.FK_DMNGANH_DMKHOA">
+            <End Role="DMKHOA" EntitySet="DMKHOAs" />
+            <End Role="DMNGANH" EntitySet="DMNGANHs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DMLOP_DMNGANH" Association="Self.FK_DMLOP_DMNGANH">
+            <End Role="DMNGANH" EntitySet="DMNGANHs" />
+            <End Role="DMLOP" EntitySet="DMLOPs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DMSINHVIEN_DMLOP" Association="Self.FK_DMSINHVIEN_DMLOP">
+            <End Role="DMLOP" EntitySet="DMLOPs" />
+            <End Role="DMSINHVIEN" EntitySet="DMSINHVIENs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PracticeSQLModelStoreContainer" CdmEntityContainer="PracticeSQLEntities">
+          <EntitySetMapping Name="DMDIEMHPs">
+            <EntityTypeMapping TypeName="PracticeSQLModel.DMDIEMHP">
+              <MappingFragment StoreEntitySet="DMDIEMHP">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="MaSV" ColumnName="MaSV" />
+                <ScalarProperty Name="MaHP" ColumnName="MaHP" />
+                <ScalarProperty Name="DiemHP" ColumnName="DiemHP" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DMHOCPHANs">
+            <EntityTypeMapping TypeName="PracticeSQLModel.DMHOCPHAN">
+              <MappingFragment StoreEntitySet="DMHOCPHAN">
+                <ScalarProperty Name="MaHP" ColumnName="MaHP" />
+                <ScalarProperty Name="TenHP" ColumnName="TenHP" />
+                <ScalarProperty Name="Sodvht" ColumnName="Sodvht" />
+                <ScalarProperty Name="MaNganh" ColumnName="MaNganh" />
+                <ScalarProperty Name="HocKy" ColumnName="HocKy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DMKHOAs">
+            <EntityTypeMapping TypeName="PracticeSQLModel.DMKHOA">
+              <MappingFragment StoreEntitySet="DMKHOA">
+                <ScalarProperty Name="MaKhoa" ColumnName="MaKhoa" />
+                <ScalarProperty Name="TenKhoa" ColumnName="TenKhoa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DMLOPs">
+            <EntityTypeMapping TypeName="PracticeSQLModel.DMLOP">
+              <MappingFragment StoreEntitySet="DMLOP">
+                <ScalarProperty Name="MaLop" ColumnName="MaLop" />
+                <ScalarProperty Name="TenLop" ColumnName="TenLop" />
+                <ScalarProperty Name="MaNganh" ColumnName="MaNganh" />
+                <ScalarProperty Name="KhoaHoc" ColumnName="KhoaHoc" />
+                <ScalarProperty Name="HeDT" ColumnName="HeDT" />
+                <ScalarProperty Name="NamNhapHoc" ColumnName="NamNhapHoc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DMNGANHs">
+            <EntityTypeMapping TypeName="PracticeSQLModel.DMNGANH">
+              <MappingFragment StoreEntitySet="DMNGANH">
+                <ScalarProperty Name="MaNganh" ColumnName="MaNganh" />
+                <ScalarProperty Name="TenNganh" ColumnName="TenNganh" />
+                <ScalarProperty Name="MaKhoa" ColumnName="MaKhoa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DMSINHVIENs">
+            <EntityTypeMapping TypeName="PracticeSQLModel.DMSINHVIEN">
+              <MappingFragment StoreEntitySet="DMSINHVIEN">
+                <ScalarProperty Name="MaSV" ColumnName="MaSV" />
+                <ScalarProperty Name="HoTen" ColumnName="HoTen" />
+                <ScalarProperty Name="MaLop" ColumnName="MaLop" />
+                <ScalarProperty Name="GioiTinh" ColumnName="GioiTinh" />
+                <ScalarProperty Name="NgaySinh" ColumnName="NgaySinh" />
+                <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="PracticeSQLModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
