@@ -462,6 +462,18 @@ namespace LINQ.Controllers
             IEnumerable<TBCViewModel> query =db.Database.SqlQuery<TBCViewModel>("TinhTBCUpdate @Hocky,@Malop", parameters).ToList();
             return Json(query, JsonRequestBehavior.AllowGet);
         }
+        // Viết cái này để test git
+        [HttpGet]
+        public JsonResult DiemTBCTest(int Hocky, string Malop)
+        {
+            var parameters = new SqlParameter[]
+            {
+                new SqlParameter("@Hocky",Hocky),
+                new SqlParameter("@Malop",Malop)
+            };
+            IEnumerable<TBCViewModel> query = db.Database.SqlQuery<TBCViewModel>("TinhTBCUpdate @Hocky,@Malop", parameters).ToList();
+            return Json(query, JsonRequestBehavior.AllowGet);
+        }
 
     }
 }
